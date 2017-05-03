@@ -108,7 +108,7 @@ server <- function(input, output) {
   
 # Plot the number of annotations for every gene based on the aspect of annotations and colored by the evidence code.
   output$bars3 <- renderPlotly({
-    gg <-  datasetInput() %>% filter(V14==input$DatePlot) %>% ggplot(aes(x=V9, fill = V7)) +
+    gg <-  datasetInput() %>% filter(V14==input$DatePlot) %>% ggplot(aes(x=V7, fill = V9)) +
       geom_bar(position = "dodge")
     ggplotly(gg)
   })
