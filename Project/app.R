@@ -82,7 +82,7 @@ server <- function(input, output) {
   
 # Plot the number of annotations for every gene based on the aspect of annotations and colored by the evidence code.
   output$bars <- renderPlotly({
-    gg <-  datasetInput() %>% filter(V3==input$genes) %>% ggplot(aes(x=V5, fill = V9))+ facet_wrap(~V7, ncol = 3 ) +
+    gg <-  datasetInput() %>% filter(V3==input$genes) %>% ggplot(aes(x=V5, fill = V9)) +
       geom_bar(position = "dodge")
     ggplotly(gg)
   })
@@ -95,7 +95,7 @@ server <- function(input, output) {
   
 # Plot the number of annotations for every GO term based on the aspect of annotations and colored by the evidence code.  
   output$bars2 <- renderPlotly({
-    gg <-  datasetInput() %>% filter(V5==input$goterms) %>% ggplot(aes(x=V3, fill = V7)) + facet_wrap(~V7, ncol = 3) +
+    gg <-  datasetInput() %>% filter(V5==input$goterms) %>% ggplot(aes(x=V9, fill = V7)) +
       geom_bar(position = "dodge")
     ggplotly(gg)
   })
@@ -103,7 +103,7 @@ server <- function(input, output) {
 # Extract the list of genes and provide to the user a drop-down menu.
   output$data3 <- renderUI({
     data3 <- datasetInput()
-    dateInput("DatePlot", "Date Plot", min=min(data3$V14), max=max(data3$V14), value=median(data3$V14))
+    dateInput("DatePlot", "Date Plot", min=min(data3$V14), max=max(data3$V14), value=ymd(20021014))
   })
   
 # Plot the number of annotations added on a specific date based on the number of GOTerms, colored by the evidence code and faceted by aspect.
