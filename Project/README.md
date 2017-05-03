@@ -8,4 +8,4 @@ if (!require('lubridate')) install.packages("lubridate")
 shiny::runGitHub("STAT585X", "Gkandoi", subdir = "Project")
 ```
 
-Or you can clone or download this repository, change working directory to the repository (STAT585X) and run 'shiny::runApp("Project")'.
+Or you can clone or download this repository, change working directory to the repository (STAT585X) and run `shiny::runApp("Project")`.
