@@ -5,10 +5,15 @@ library(readr)
 library(lubridate)
 # Load datasets
 
-HSA <- unique(read.table("./data/goa_human.gaf",skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
-MMU <- unique(read.table("./data/gene_association.mgi",skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+HSA <- unique(read.table(gzfile("./data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+MMU <- unique(read.table(gzfile("./data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ATH <- unique(read.table(gzfile("./data/gene_association.tair.gz"),skip = 24, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ZFN <- unique(read.table(gzfile("./data/gene_association.zfin.gz"),skip = 28, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
 HSA$V14 <- as.character(ymd(HSA$V14))
 MMU$V14 <- as.character(ymd(MMU$V14))
+ATH$V14 <- as.character(ymd(ATH$V14))
+ZFN$V14 <- as.character(ymd(ZFN$V14))
+
 
 # Define UI for application
 ui <- fluidPage(    
@@ -17,7 +22,7 @@ ui <- fluidPage(
 # Sidebar with a radio button to select the Organism
   sidebarPanel(
     radioButtons("radio", label = h3("Choose organism"),
-                 choices = list("Human" = 1, "Mouse" = 2), 
+                 choices = list("Human" = 1, "Mouse" = 2, "Athaliana" = 3, "ZebraFish" = 4), 
                  selected = 1),
     conditionalPanel(
       condition = "input.conditionedPanels == 'Table'", numericInput(inputId = "n","# of Annotations", value = 10)),
@@ -26,7 +31,7 @@ ui <- fluidPage(
     conditionalPanel(
       condition = "input.conditionedPanels == 'Bar Plot of Go terms'",uiOutput("data2")),
     conditionalPanel(
-      condition = "input.conditionedPanels == 'Growth'", uiOutput("data3"))
+      condition = "input.conditionedPanels == 'Annotation Added'", uiOutput("data3"))
   ),
   
 # Define the tab panels
@@ -36,7 +41,7 @@ ui <- fluidPage(
       tabPanel("Plot", plotlyOutput("aspect")),
       tabPanel("Bar Plot of Genes",plotlyOutput("bars")),
       tabPanel("Bar Plot of Go terms",plotlyOutput("bars2")),
-      tabPanel("Growth", plotlyOutput("bars3")),
+      tabPanel("Annotation Added", plotlyOutput("bars3")),
       id = "conditionedPanels"
     )
   )
@@ -48,9 +53,14 @@ server <- function(input, output) {
   datasetInput <- reactive({
     if (input$radio == 1) {
       HSA
-    }  else {
+    } else if (input$radio == 2) {
       MMU
+    } else if (input$radio == 3) {
+      ATH
+    } else if (input$radio == 4) {
+      ZFN
     }
+    
   })
 
 # Show the first "10" observations and give user an option to view more than 10.
