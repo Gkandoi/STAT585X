@@ -23,9 +23,9 @@ ui <- fluidPage(
   sidebarPanel(
     radioButtons("radio", label = h3("Choose organism"),
                  choices = list("Human" = 1, "Mouse" = 2, "Athaliana" = 3, "ZebraFish" = 4), 
-                 selected = 1),
+                 selected = 4),
     conditionalPanel(
-      condition = "input.conditionedPanels == 'Table'", numericInput(inputId = "n","# of Annotations", value = 10)),
+      condition = "input.conditionedPanels == 'Table'" ),
     conditionalPanel(
       condition = "input.conditionedPanels == 'Bar Plot of Genes'", uiOutput("data")),
     conditionalPanel(
@@ -37,7 +37,7 @@ ui <- fluidPage(
 # Define the tab panels
   mainPanel(
     tabsetPanel(
-      tabPanel("Table", tableOutput("view")),
+      tabPanel("Table", dataTableOutput("view")),
       tabPanel("Plot", plotlyOutput("aspect")),
       tabPanel("Bar Plot of Genes",plotlyOutput("bars", height = "600px", width = "110%")),
       tabPanel("Bar Plot of Go terms",plotlyOutput("bars2", height = "600px", width = "110%")),
@@ -64,9 +64,8 @@ server <- function(input, output) {
   })
 
 # Show the first "10" observations and give user an option to view more than 10.
-  output$view <- renderTable({
-    head(datasetInput(), n = input$n)
-  })
+  output$view <- renderDataTable(datasetInput(), options = list(pageLength = 10))
+
 # Plot the number of annotations for every evidence code, colored by the aspect of annotations.
   output$aspect <- renderPlotly({
     gg <-  ggplot(data = datasetInput(), aes(x = V7, fill = V9)) +
