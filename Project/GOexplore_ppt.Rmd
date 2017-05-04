@@ -40,7 +40,7 @@ Supported by evidence codes
 
 The Gene Ontology Consortium: http://www.geneontology.org/page/download-annotations
 
-GOexplore: 
+Current App: https://github.com/Gkandoi/STAT585X/tree/master/Project
 
 # Questions?
 
