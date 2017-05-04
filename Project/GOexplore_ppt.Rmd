@@ -1,0 +1,45 @@
+---
+title: "GOexplore"
+author: "GauravKandoi"
+ratio: 16x10
+output:
+  rmdshower::shower_presentation:
+    self_contained: false
+    katex: true
+    theme: ribbon
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# GOexplore: A shiny app to visualize Gene Ontology Annotations
+
+## Gene Ontology
+
+Provides controlled vocabularies of defined terms representing gene product properties
+
+Three aspects:
+
+- **Cellular Component**: component of a cell
+- **Molecular Function**: molecular level elemental activities
+- **Biological Process**: series of one or more molecular events
+
+## Gene Ontology Annotations
+
+Assigning GO terms to genes
+
+Supported by evidence codes
+
+- **Experimental**
+- **Computational**
+- **Author Statements**
+- **Curatorial Statements**
+- **Automatic**
+
+## Availability
+
+The Gene Ontology Consortium: http://www.geneontology.org/page/download-annotations
+
+# Questions?
+
+
