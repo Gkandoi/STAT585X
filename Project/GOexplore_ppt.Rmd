@@ -40,6 +40,8 @@ Supported by evidence codes
 
 The Gene Ontology Consortium: http://www.geneontology.org/page/download-annotations
 
+GOexplore: 
+
 # Questions?
 
 

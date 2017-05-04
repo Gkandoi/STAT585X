@@ -6,10 +6,10 @@ library(lubridate)
 
 # Load datasets
 
-HSA <- unique(read.table(gzfile("./data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
-MMU <- unique(read.table(gzfile("./data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
-ATH <- unique(read.table(gzfile("./data/gene_association.tair.gz"),skip = 24, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
-ZFN <- unique(read.table(gzfile("./data/gene_association.zfin.gz"),skip = 28, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+HSA <- unique(read.table(gzfile("../data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+MMU <- unique(read.table(gzfile("../data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ATH <- unique(read.table(gzfile("../data/gene_association.tair.gz"),skip = 24, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ZFN <- unique(read.table(gzfile("../data/gene_association.zfin.gz"),skip = 28, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
 HSA$V14 <- as.character(ymd(HSA$V14))
 MMU$V14 <- as.character(ymd(MMU$V14))
 ATH$V14 <- as.character(ymd(ATH$V14))

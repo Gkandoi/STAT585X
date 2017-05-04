@@ -4,8 +4,8 @@ library(plotly)
 library(readr)
 
 # Load datasets
-HSA <- unique(read.table(gzfile("./Project/data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
-MMU <- unique(read.table(gzfile("./Project/data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+HSA <- unique(read.table(gzfile("../data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+MMU <- unique(read.table(gzfile("../data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
 colnames(HSA) <- c("Gene", "GOTerms", "Evidence", "Aspect", "Date")
 colnames(MMU) <- c("Gene", "GOTerms", "Evidence", "Aspect", "Date")
 HSA$Gene <- toupper(HSA$Gene)
