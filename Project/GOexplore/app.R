@@ -40,9 +40,9 @@ ui <- fluidPage(
     tabsetPanel(
       tabPanel("Table", dataTableOutput("view")),
       tabPanel("Plot", plotlyOutput("aspect")),
-      tabPanel("Bar Plot of Genes",plotlyOutput("bars", height = "600px", width = "110%")),
-      tabPanel("Bar Plot of Go terms",plotlyOutput("bars2", height = "600px", width = "110%")),
-      tabPanel("Annotation Added", plotlyOutput("bars3", height = "600px", width = "110%")),
+      tabPanel("Bar Plot of Genes",plotlyOutput("bars", height = "600px")),
+      tabPanel("Bar Plot of Go terms",plotlyOutput("bars2", height = "600px")),
+      tabPanel("Annotation Added", plotlyOutput("bars3", height = "600px")),
       id = "conditionedPanels"
     )
   )

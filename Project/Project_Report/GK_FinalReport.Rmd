@@ -86,8 +86,16 @@ It consists of three sections:
 * **Tab panel:** The tab panel provides the user to switch between various types of visualization. Currently, there are five tabs:
     + Table: The first tab makes use of the `dataTableOutput` to render the entire annotations as a very interactive and user-friendly table. The user has the capability to search for strings within the entire table using the search button at the top right corner. The user can also filter the annotations displayed by searching in a specific column. Filtering can also be performed by searching in multiple columns. For instance, figure 3 displays the results for the gene *shha* and evidence *IDA*.
     
-    ![The conditional Sidebar](./Figures/MultiFilter.png)
+    ![Filter based on multiple variables](./Figures/MultiFilter.png)
     
-    By default, 10 entries are displayed, but there is an option at the top left corner for the user to have the App display 10, 25, 50 or 100 entries. The user can sort the table in ascending/descending order based on any column. 
+    By default, 10 entries are displayed, but there is an option at the top left corner for the user to have the App display 10, 25, 50 or 100 entries. The user can sort the table in ascending/descending order based on any column.
+    
+    + Plot: The second panel creates a bar plot using the count of annotations for every evidence code colored by the aspect. An example for Mouse is shown in figure 4.
+    
+    ![The Plots tab](./Figures/PlotTab.png)
+    
+    The plot is created using `plotly` and is thus interactive. As can be seen in figure 4, the user can see the count, the evidence code and the aspect code on hovering over the bars. The legends on the right are reactive and the user can decide to select only a subset of the aspects. If you notice in figure 4, the legend for *Moleculae Function (F)* is grayed out and thus filteres from the plot.
+    
+    + Bar Plot of Genes: The next tab
 
 - **Main panel:**
