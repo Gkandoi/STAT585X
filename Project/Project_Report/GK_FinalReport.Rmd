@@ -84,18 +84,31 @@ It consists of three sections:
 ![The conditional Sidebar](./Figures/Sidebar2.png)
 
 * **Tab panel:** The tab panel provides the user to switch between various types of visualization. Currently, there are five tabs:
-    + Table: The first tab makes use of the `dataTableOutput` to render the entire annotations as a very interactive and user-friendly table. The user has the capability to search for strings within the entire table using the search button at the top right corner. The user can also filter the annotations displayed by searching in a specific column. Filtering can also be performed by searching in multiple columns. For instance, figure 3 displays the results for the gene *shha* and evidence *IDA*.
+
+    + **Table:** The first tab makes use of the `dataTableOutput` to render the entire annotations as a very interactive and user-friendly table. The user has the capability to search for strings within the entire table using the search button at the top right corner. The user can also filter the annotations displayed by searching in a specific column. Filtering can also be performed by searching in multiple columns. For instance, figure 3 displays the results for the gene *shha* and evidence *IDA*.
     
     ![Filter based on multiple variables](./Figures/MultiFilter.png)
     
     By default, 10 entries are displayed, but there is an option at the top left corner for the user to have the App display 10, 25, 50 or 100 entries. The user can sort the table in ascending/descending order based on any column.
     
-    + Plot: The second panel creates a bar plot using the count of annotations for every evidence code colored by the aspect. An example for Mouse is shown in figure 4.
+    + **Plot:** The second panel creates a bar plot using the count of annotations for every evidence code colored by the aspect. An example for Mouse is shown in figure 4.
     
     ![The Plots tab](./Figures/PlotTab.png)
     
     The plot is created using `plotly` and is thus interactive. As can be seen in figure 4, the user can see the count, the evidence code and the aspect code on hovering over the bars. The legends on the right are reactive and the user can decide to select only a subset of the aspects. If you notice in figure 4, the legend for *Moleculae Function (F)* is grayed out and thus filteres from the plot.
     
-    + Bar Plot of Genes: The next tab
+    + **Bar Plot of Genes:** The next tab generates a plot using the count (on y-axis) of every gene annotated to a GO term (on x-axis) which are colored by the aspect. Again, it uses `plotly` and therefore the plot is interactive for the user to play with. An example plot for the *aadac* gene from Zebrafish is shown in figure 5. The sidebar updates everytime a user changes the organism, to reflect the genes present in the annotations of that organism. The functions `renderUI` and `selectInput` was used to generate this user reactive panel.
+    
+    ![Bar Plot of Genes](./Figures/Bar_Plot_Genes.png)
+    
+    + **Bar Plot of GO terms:** Similar to the previous tab, this tab generartes a bar plot of the count (on y-axis) of every GO term based on it's aspect (on x-axis) and colored by the evidence. An example plot for *Arabidopsis thaliana* for GO term *GO:00000003* is shown in figure 6. It is also created using `plotly` and hence provides the user an option to show/hide the data for evidence codes. Hovering over the bar plots displays the count, aspect and the evidence code. The sidebar updates everytime a user changes the organism, to reflect the GO terms present in the annotations of that organism. The functions `renderUI` and `selectInput` was used to generate this user reactive panel.
+    
+    ![Bar Plot of GO Terms](./Figures/Bar_Plot_GOterms.png)
+    
+    + **Annoation Added:** The final tab displays the number of annotations added on the user selected date which is provided on the sidebar panel using `renderUI` with `dateInput`. It displays the count (on y-axis) of annotations for GO terms (on x-axis) colored by the evidence code and faceted by the aspect. An example plot from Humans for the annotations added on `2002-10-14` is shown in figure 7. The plot is generated using `plotly` and provides the user an option to show/hide data from evidence codes while displaying the count, GO term and the evidence on hover.
+    
+    ![Annotation Added](./Figures/AnnotationAdded.png)
+    
+- **Main panel:** The main panel is the area where the tables and plots are displayed.
 
-- **Main panel:**
+GOexplore provides a very interactive interface for people with little to no programming background to browse through the complex gene annotations and intuitively visualize the distribution of genes and GO terms and filter these based on their aspect or evidence code.
