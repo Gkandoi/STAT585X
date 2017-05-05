@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE, eval = FALSE)
 ```
 
 # Abstract
@@ -28,3 +28,49 @@ A *GO annotation* describes the association between an aspect of the ontology an
 - **Author Statements**
 - **Curatorial Statements**
 - **Automatic**
+
+## The GO data description
+
+The GO project provides tab-separated annotation files for several species through their website, http://www.geneontology.org/page/download-annotations. For the purpose of this project, I downloaded the datasets for four commonly studies species, Humans, Mouse, Arabidopsis thaliana and Zebra fish. The GO annotations contain information more than 10 variables. For this study, I plan to use only five variables; Gene Symbol, GO term, Evidence Code, Aspect and Date annotation added.
+
+A GO term can be associated with only one Aspect, while a Aspect has multiple GO terms describing it. Genes have many-to-many relation with GO terms, Aspect, Evidence and Date. Aspect and GO terms have a many-to-many relation with Evidence.
+
+The first step in the Shiny App is to read these annotations and store them as data frames. The following code chunks perform this:
+
+```{r}
+HSA <- unique(read.table(gzfile("../data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+MMU <- unique(read.table(gzfile("../data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ATH <- unique(read.table(gzfile("../data/gene_association.tair.gz"),skip = 24, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+ZFN <- unique(read.table(gzfile("../data/gene_association.zfin.gz"),skip = 28, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+```
+
+The files provided by the GO project are gzip compressed. I tried reading in the compressed as well as the uncompressed files and the difference wasn't very big (usually less than one second for a file), so I decided to read in the compressed files (GitHub was getting angry when I was uploading multiple ~70mb files). I'm storing only the 5 variables discussed above to speed-up the Apps. These files contain several lines of meta-information and it differs across species. Hence, I had to hard-code these with the `skip = XX` parameter.
+
+# Dependencies and Availability
+
+The shiny Apps depend on the following external packages:
+
+- shiny
+- ggplot2
+- plotly
+- readr
+- lubridate
+
+The Apps are available through [GitHub](https://github.com/Gkandoi/STAT585X/tree/master/Project) for research purposes only. To run the Apps, use the following commands:
+
+```{r}
+## For GOexplore
+if (!require('shiny', 'ggplot2', 'plotly', 'readr')) install.packages("shiny", "ggplot2", "plotly", "readr")
+if (!require('lubridate')) install.packages("lubridate")
+shiny::runGitHub("STAT585X", "Gkandoi", subdir = "Project/GOexplore")
+```
+
+```{r}
+## For GOcompare
+if (!require('shiny', 'ggplot2', 'plotly', 'readr')) install.packages("shiny", "ggplot2", "plotly", "readr")
+shiny::runGitHub("STAT585X", "Gkandoi", subdir = "Project/GOcompare")
+```
+
+# GOexplore
+
+The first App, GOexplore, lets a user browse through the annotations while also generating interactive graphics. 
