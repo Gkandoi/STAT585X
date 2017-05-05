@@ -79,7 +79,7 @@ The first App, GOexplore, lets a user browse through the annotations while also 
 
 It consists of three sections:
 
-* **Sidebar Panel:** On the homepage, the user is presented with a choice to select the organism. The sidebar panel is conditional and updates based on the current tab. For instance, if we go to the *Bar Plot of Genes* tab, we can see a list of gene appear in the sidebar panel. it is shown in figure 2.
+* **Sidebar Panel:** On the homepage, the user is presented with a choice to select the organism. The sidebar panel is conditional and updates based on the current tab. For instance, if we go to the *Bar Plot of Genes* tab, we can see a list of gene appear in the sidebar panel. It is shown in figure 2.
 
 ![The conditional Sidebar](./Figures/Sidebar2.png)
 
