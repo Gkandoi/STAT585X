@@ -73,4 +73,21 @@ shiny::runGitHub("STAT585X", "Gkandoi", subdir = "Project/GOcompare")
 
 # GOexplore
 
-The first App, GOexplore, lets a user browse through the annotations while also generating interactive graphics. 
+The first App, GOexplore, lets a user browse through the annotations while also generating interactive graphics. The figure 1 is the screenshot of the landing page.
+
+![Screenshot of the GOexplore homepage](./Figures/GOexplore.png)
+
+It consists of three sections:
+
+* **Sidebar Panel:** On the homepage, the user is presented with a choice to select the organism. The sidebar panel is conditional and updates based on the current tab. For instance, if we go to the *Bar Plot of Genes* tab, we can see a list of gene appear in the sidebar panel. it is shown in figure 2.
+
+![The conditional Sidebar](./Figures/Sidebar2.png)
+
+* **Tab panel:** The tab panel provides the user to switch between various types of visualization. Currently, there are five tabs:
+    + Table: The first tab makes use of the `dataTableOutput` to render the entire annotations as a very interactive and user-friendly table. The user has the capability to search for strings within the entire table using the search button at the top right corner. The user can also filter the annotations displayed by searching in a specific column. Filtering can also be performed by searching in multiple columns. For instance, figure 3 displays the results for the gene *shha* and evidence *IDA*.
+    
+    ![The conditional Sidebar](./Figures/MultiFilter.png)
+    
+    By default, 10 entries are displayed, but there is an option at the top left corner for the user to have the App display 10, 25, 50 or 100 entries. The user can sort the table in ascending/descending order based on any column. 
+
+- **Main panel:**
