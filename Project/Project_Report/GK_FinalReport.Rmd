@@ -95,20 +95,45 @@ It consists of three sections:
     
     ![The Plots tab](./Figures/PlotTab.png)
     
-    The plot is created using `plotly` and is thus interactive. As can be seen in figure 4, the user can see the count, the evidence code and the aspect code on hovering over the bars. The legends on the right are reactive and the user can decide to select only a subset of the aspects. If you notice in figure 4, the legend for *Moleculae Function (F)* is grayed out and thus filteres from the plot.
+    The plot is created using `ggplot` and `plotly` and is thus interactive. As can be seen in figure 4, the user can see the count, the evidence code and the aspect code on hovering over the bars. The legends on the right are reactive and the user can decide to select only a subset of the aspects. If you notice in figure 4, the legend for *Moleculae Function (F)* is grayed out and thus filteres from the plot.
     
     + **Bar Plot of Genes:** The next tab generates a plot using the count (on y-axis) of every gene annotated to a GO term (on x-axis) which are colored by the aspect. Again, it uses `plotly` and therefore the plot is interactive for the user to play with. An example plot for the *aadac* gene from Zebrafish is shown in figure 5. The sidebar updates everytime a user changes the organism, to reflect the genes present in the annotations of that organism. The functions `renderUI` and `selectInput` was used to generate this user reactive panel.
     
     ![Bar Plot of Genes](./Figures/Bar_Plot_Genes.png)
     
-    + **Bar Plot of GO terms:** Similar to the previous tab, this tab generartes a bar plot of the count (on y-axis) of every GO term based on it's aspect (on x-axis) and colored by the evidence. An example plot for *Arabidopsis thaliana* for GO term *GO:00000003* is shown in figure 6. It is also created using `plotly` and hence provides the user an option to show/hide the data for evidence codes. Hovering over the bar plots displays the count, aspect and the evidence code. The sidebar updates everytime a user changes the organism, to reflect the GO terms present in the annotations of that organism. The functions `renderUI` and `selectInput` was used to generate this user reactive panel.
+    + **Bar Plot of GO terms:** Similar to the previous tab, this tab generartes a bar plot of the count (on y-axis) of every GO term based on it's aspect (on x-axis) and colored by the evidence. An example plot for *Arabidopsis thaliana* for GO term *GO:00000003* is shown in figure 6. It is also created using `ggplot` and `plotly` and hence provides the user an option to show/hide the data for evidence codes. Hovering over the bar plots displays the count, aspect and the evidence code. The sidebar updates everytime a user changes the organism, to reflect the GO terms present in the annotations of that organism. The functions `renderUI` and `selectInput` was used to generate this user reactive panel.
     
     ![Bar Plot of GO Terms](./Figures/Bar_Plot_GOterms.png)
     
-    + **Annoation Added:** The final tab displays the number of annotations added on the user selected date which is provided on the sidebar panel using `renderUI` with `dateInput`. It displays the count (on y-axis) of annotations for GO terms (on x-axis) colored by the evidence code and faceted by the aspect. An example plot from Humans for the annotations added on `2002-10-14` is shown in figure 7. The plot is generated using `plotly` and provides the user an option to show/hide data from evidence codes while displaying the count, GO term and the evidence on hover.
+    + **Annoation Added:** The final tab displays the number of annotations added on the user selected date which is provided on the sidebar panel using `renderUI` with `dateInput`. It displays the count (on y-axis) of annotations for GO terms (on x-axis) colored by the evidence code and faceted by the aspect. An example plot from Humans for the annotations added on `2002-10-14` is shown in figure 7. The plot is generated using `ggplot` and `plotly` and provides the user an option to show/hide data from evidence codes while displaying the count, GO term and the evidence on hover.
     
     ![Annotation Added](./Figures/AnnotationAdded.png)
     
 - **Main panel:** The main panel is the area where the tables and plots are displayed.
 
-GOexplore provides a very interactive interface for people with little to no programming background to browse through the complex gene annotations and intuitively visualize the distribution of genes and GO terms and filter these based on their aspect or evidence code.
+GOexplore provides a very interactive interface for people with little to no programming background to browse through the complex gene annotations and intuitively visualize the distribution of genes and GO terms and filter these based on their aspect or evidence code. The App is very flexible and easy to modify. Bringing in data for more species will require only the addition of the compressed annotation file in the `data` folder and the addition of a code line as described in the *The GO data description* section. With more powerful computing resources, even detailed plots can be made by adding in more information in the graphs.
+
+While, GOexplore is very useful, it is sometimes desired to compare the annotations across species. To be able to do so, I developed another App, GOcompare.
+
+# GOcompare
+
+GOcompare provides a very intuitive and interactive way for visualizing the GO annotations across Humans and Mouse. The main hurdle in doing so was to format the gene symbols in Mouse and Human annotations to be alike. This was acheived by the following not-so-efficient method:
+
+```{r}
+HSA <- unique(read.table(gzfile("../data/goa_human.gaf.gz"),skip = 34, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+MMU <- unique(read.table(gzfile("../data/gene_association.mgi.gz"),skip = 47, header = F, sep = "\t", strip.white = F, stringsAsFactors = T, skipNul = T, quote = "",comment.char = "")[,c(3,5,7,9,14)])
+colnames(HSA) <- c("Gene", "GOTerms", "Evidence", "Aspect", "Date")
+colnames(MMU) <- c("Gene", "GOTerms", "Evidence", "Aspect", "Date")
+HSA$Gene <- toupper(HSA$Gene)
+MMU$Gene <- toupper(MMU$Gene)
+All_Genes <- as.character(unique(toupper(rbind(HSA,MMU)[,1])))
+```
+
+First, the annotations are read in. Then, matching column names are assigned to both the data frame. The gene symbols in Mouse data are in lower cases, while it is in upper case for the Humans. To be able to map the gene symbols to both the datasets, gene symbols for these are all converted to upper case. And finally, these are combined to produce an exhautive list of gene symbols which include unique genes in any organism as well as the same genes in both of these.
+
+The sidebar panel provides the user with an option to select the gene using the `selectInput` function.
+
+The main panel displays two plots, one for humans and the other for mouse. The plot creates bars based on the count (on y-axis) of the annotations of a gene for every GO term (on x-axis), faceted by the aspect and colored by the evidence.  The plots are generated using `ggplot` and `plotly`, providing the user flexibility to show/hide data for evidence codes. The figure 8 presents an example plot comparing the annotations between humans and mouse for the gene *ABCA1*.
+
+![GOcompare](./Figures/GOcompare.png)
+    
